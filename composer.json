@@ -1,0 +1,16 @@
+{
+    "name": "kayo/c3po-discord",
+    "description": "Discord bot",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kayo Bruno",
+            "email": "kayodw@gmail.com"
+        }
+    ]
+}
