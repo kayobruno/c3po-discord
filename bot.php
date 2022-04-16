@@ -1,27 +1,19 @@
 <?php
 
-use Discord\Discord;
-use Discord\Parts\Channel\Message;
-use Discord\WebSockets\Event;
+declare(strict_types=1);
+
+use App\Kernel;
+use Psr\Container\ContainerInterface;
 
 require './vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
 $dotenv->safeLoad();
 
-$token = getenv('DISCORD_TOKEN');
-$discord = new Discord(['token' => $token]);
+(function() {
+    /** @var ContainerInterface $container */
+    $container = require 'config/container.php';
 
-$discord->on('ready', function (Discord $discord) {
-    echo 'Bot is ready!' . PHP_EOL;
-
-    $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-        if ($message->author->bot) return;
-
-        if ($message->content === '$ping') {
-            $message->reply('Pong!');
-        }
-    });
-});
-
-$discord->run();
+    $kernel = $container->get(Kernel::class);
+    $kernel->run();
+})();
