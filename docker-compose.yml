@@ -21,7 +21,7 @@ services:
     depends_on:
       - c3po_db
   c3po_db:
-    image: mysql:latest@sha256:00f9eb474bf3c508d79292234abc60dae082290445f44e38d9fcd844c2cd3372
+    image: mysql:5.7.37-oracle@sha256:1e755fd5ab6cd782256827067603dbef93493c4a91bbb88d51362dbf1f57e8b1
     command: --default-authentication-plugin=mysql_native_password
     container_name: c3po_db
     restart: unless-stopped
@@ -34,6 +34,6 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - .docker/mysql:/var/lib/mysql/
+      - .docker/mysql:/var/lib/mysql
     networks:
       - app-network
