@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entities;
 
 use App\Contracts\Entity;
@@ -10,11 +12,6 @@ abstract class AbstractEntity implements Entity
     protected string $primaryKey = 'id';
     protected ?int $id = null;
     protected array $fields = [];
-
-    public function __construct()
-    {
-        $this->fields[] = $this->primaryKey;
-    }
 
     public function getTableName(): string
     {
