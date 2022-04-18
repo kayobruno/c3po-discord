@@ -7,5 +7,6 @@ $builder->useAutowiring(false);
 $builder->useAnnotations(false);
 
 $builder->addDefinitions(require __DIR__ . '/app.php');
+$builder->addDefinitions(require __DIR__ . '/repositories.php');
 
 return $builder->build();
