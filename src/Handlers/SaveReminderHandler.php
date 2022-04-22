@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Handlers;
 
-use App\Commands\CreateReminder;
+use App\Commands\SaveReminder;
 use App\Contracts\{Command, Entity, Repository};
+use App\Entities\Reminder;
 
-class CreateReminderHandler implements Command
+class SaveReminderHandler implements Command
 {
-    public function __construct(private Repository $repository, private Entity $reminder)
+    public function __construct(private Repository $repository, private Reminder $reminder)
     {}
 
     public function getRepository(): Repository
@@ -24,7 +25,7 @@ class CreateReminderHandler implements Command
 
     public function execute(): void
     {
-        $command = new CreateReminder($this);
+        $command = new SaveReminder($this);
         $command->execute();
     }
 }
