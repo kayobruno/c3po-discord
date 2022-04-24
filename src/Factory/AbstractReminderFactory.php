@@ -9,7 +9,6 @@ use App\Enumerations\Frequency;
 use DateTime;
 use DateTimeImmutable;
 use InvalidArgumentException;
-use UnhandledMatchError;
 
 abstract class AbstractReminderFactory
 {
@@ -29,7 +28,7 @@ abstract class AbstractReminderFactory
     protected static function extractWhen(string $message): DateTimeImmutable
     {
         $split = self::splitMessage($message);
-        $when = strlen($split[1]) > 5 ?: self::formatDate($split[1]);
+        $when = self::formatDate($split[1]);
 
         return new DateTimeImmutable($when);
     }
@@ -50,21 +49,29 @@ abstract class AbstractReminderFactory
 
     private static function formatDate(string $stringTime): string
     {
-        try {
-            $now = new DateTime();
-            $numberTime = preg_replace('/[^0-9]/', '', $stringTime);
+        $now = new DateTime();
+        $numberTime = preg_replace('/[^0-9]/', '', $stringTime);
 
-            $date = match (true) {
-                str_contains($stringTime, 's') => $now->modify("+{$numberTime} seconds"),
-                str_contains($stringTime, 'm') => $now->modify("+{$numberTime} minutes"),
-                str_contains($stringTime, 'h') => $now->modify("+{$numberTime} hours"),
-                str_contains($stringTime, 'd') => $now->modify("+{$numberTime} days"),
-                default => throw new InvalidArgumentException('Invalid time'),
-            };
-        } catch (UnhandledMatchError $exception) {
-            var_dump($exception->getMessage());
-        }
+        $date = match (true) {
+            strlen($stringTime) >= 3 => self::processFullDate($stringTime),
+            str_contains($stringTime, 's') => $now->modify("+{$numberTime} seconds"),
+            str_contains($stringTime, 'm') => $now->modify("+{$numberTime} minutes"),
+            str_contains($stringTime, 'h') => $now->modify("+{$numberTime} hours"),
+            str_contains($stringTime, 'd') => $now->modify("+{$numberTime} days"),
+            default => throw new InvalidArgumentException('Invalid time'),
+        };
 
         return $date->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private static function processFullDate(string $stringTime): DateTime
+    {
+        preg_match('#\{(.*?)\}#', $stringTime, $match);
+        $datetime = str_replace('_', ' ', $match[1]);
+
+        return new DateTime($datetime);
     }
 }

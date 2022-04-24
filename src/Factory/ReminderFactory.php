@@ -8,15 +8,16 @@ use App\Entities\Reminder;
 
 class ReminderFactory extends AbstractReminderFactory
 {
-    /**
-     * @throws \Exception
-     */
     public static function createReminder(string $message): Reminder
     {
-        $title = self::extractTitle($message);
-        $when = self::extractWhen($message);
-        $frequency = self::extractFrequency($message);
+        try {
+            $title = self::extractTitle($message);
+            $when = self::extractWhen($message);
+            $frequency = self::extractFrequency($message);
 
-        return new Reminder($title, $when, $frequency);
+            return new Reminder($title, $when, $frequency);
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+        }
     }
 }
