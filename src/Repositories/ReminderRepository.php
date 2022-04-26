@@ -43,6 +43,7 @@ class ReminderRepository implements Repository
         return [
             'title' => $entity->getTitle(),
             'when' => $entity->getWhen()->format('Y-m-d H:i:s'),
+            'frequency' => $entity->getFrequency()->value,
             'created_at' => (new \DateTime())->format('Y-m-d H:i:s'),
         ];
     }

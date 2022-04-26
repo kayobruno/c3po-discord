@@ -17,4 +17,19 @@ class Reminder extends AbstractEntity
         protected Frequency $frequency
     )
     {}
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getWhen(): DateTimeImmutable
+    {
+        return $this->when;
+    }
+
+    public function getFrequency(): Frequency
+    {
+        return $this->frequency;
+    }
 }
