@@ -53,7 +53,7 @@ abstract class AbstractReminderFactory
         $numberTime = preg_replace('/[^0-9]/', '', $stringTime);
 
         $date = match (true) {
-            strlen($stringTime) >= 3 => self::processFullDate($stringTime),
+            strlen($stringTime) >= 6 => self::processCompleteDate($stringTime),
             str_contains($stringTime, 's') => $now->modify("+{$numberTime} seconds"),
             str_contains($stringTime, 'm') => $now->modify("+{$numberTime} minutes"),
             str_contains($stringTime, 'h') => $now->modify("+{$numberTime} hours"),
@@ -67,7 +67,7 @@ abstract class AbstractReminderFactory
     /**
      * @throws \Exception
      */
-    private static function processFullDate(string $stringTime): DateTime
+    private static function processCompleteDate(string $stringTime): DateTime
     {
         preg_match('#\{(.*?)\}#', $stringTime, $match);
         $datetime = str_replace('_', ' ', $match[1]);
