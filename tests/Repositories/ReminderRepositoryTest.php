@@ -7,7 +7,8 @@ namespace Tests\Repositories;
 use App\Contracts\Persistence;
 use App\Entities\Reminder;
 use App\Enumerations\Frequency;
-use App\Repositories\{InMemoryReminderPersistence, ReminderRepository};
+use App\Persistence\InMemoryReminderPersistence;
+use App\Repositories\ReminderRepository;
 use PHPUnit\Framework\TestCase;
 
 class ReminderRepositoryTest extends TestCase

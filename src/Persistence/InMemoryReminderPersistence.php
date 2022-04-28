@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace App\Persistence;
 
 use App\Contracts\Persistence;
 
