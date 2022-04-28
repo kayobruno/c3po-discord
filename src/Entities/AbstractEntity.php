@@ -20,7 +20,7 @@ abstract class AbstractEntity implements Entity
 
     private function formatTableName(): string
     {
-        $className = self::class;
+        $className = (new \ReflectionClass(get_called_class()))->getShortName();
         $words = preg_split('/(?=[A-Z])/', $className);
         $words = array_filter($words);
 
