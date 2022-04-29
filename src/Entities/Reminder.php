@@ -32,4 +32,13 @@ class Reminder extends AbstractEntity
     {
         return $this->frequency;
     }
+
+    public function __serialize(): array
+    {
+        return [
+            'title' => $this->getTitle(),
+            'when' => $this->getWhen(),
+            'frequency' => $this->getFrequency(),
+        ];
+    }
 }

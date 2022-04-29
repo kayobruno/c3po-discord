@@ -32,4 +32,13 @@ class Birthday extends AbstractEntity
     {
         return $this->status;
     }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'when' => $this->getWhen(),
+            'status' => $this->getStatus(),
+        ];
+    }
 }
